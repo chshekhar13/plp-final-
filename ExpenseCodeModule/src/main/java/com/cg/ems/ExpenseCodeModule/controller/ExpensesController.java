@@ -1,5 +1,6 @@
 package com.cg.ems.ExpenseCodeModule.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,13 +41,15 @@ public class ExpensesController {
 	//display by id
 	@GetMapping("/expensecodemodule/{id}")
 	@CrossOrigin("http://localhost:4200")
-	public Optional<ExpenseCodeModule> displayById(@PathVariable("id") int id) {
+	public List<ExpenseCodeModule> displayById(@PathVariable("id") int id) {
+		List<ExpenseCodeModule> list = new ArrayList<ExpenseCodeModule>();
 		Optional<ExpenseCodeModule> expense = service.displayById(id);
 		if(expense.isPresent()) {
-			return expense;
+			list.add(expense.get());
+			return list;
 		}
 		else
-			throw new ExpenseDetailsNotFound("Expenses of the ID: "+id+" not found!");
+			return list;
 	}
 
 	//update details
